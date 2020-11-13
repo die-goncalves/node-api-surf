@@ -19,11 +19,14 @@
   "author": "Diego Gonçalves",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^26.0.15",
     "@types/module-alias": "^2.0.0",
     "@types/node": "^14.14.7",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
     "eslint": "^7.13.0",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
     "ts-node-dev": "^1.0.0",
     "typescript": "^4.0.5"
   },
