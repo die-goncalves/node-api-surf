@@ -9,7 +9,8 @@
     "start:dev": "ts-node-dev 'src/index.ts'",
     "lint": "eslint ./src ./__test__ --ext .ts",
     "lint:fix": "eslint ./src ./__test__ --ext .ts --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:functional": "jest --projects ./__test__ --forceExit --runInBand"
   },
   "keywords": [
     "nodejs",
