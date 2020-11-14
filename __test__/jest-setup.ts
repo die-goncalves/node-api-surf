@@ -2,8 +2,9 @@
 import { SetupServer } from '@src/server';
 import supertest from 'supertest';
 
-beforeAll(() => { //roda antes de todos os testes da aplicação
+beforeAll(() => {
+  //roda antes de todos os testes da aplicação
   const server = new SetupServer();
   server.init();
   global.testRequest = supertest(server.getApp());
-})
+});

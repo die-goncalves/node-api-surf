@@ -1,1 +1,1 @@
-console.log('__test__')
+console.log('__test__');
