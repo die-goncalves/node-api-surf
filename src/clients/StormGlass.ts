@@ -40,6 +40,14 @@ export class ClientRequestError extends InternalError {
   }
 }
 
+export class StormGlassResponseError extends InternalError {
+  constructor(message: string) {
+    const internalMessage =
+      'Unexpected error returned by the StormGlass service';
+    super(`${internalMessage}: ${message}`);
+  }
+}
+
 export class StormGlass {
   readonly stormGlassAPIParams =
     'swellDirection,swellHeight,swellPeriod,waveDirection,waveHeight,windDirection,windSpeed';
@@ -59,6 +67,11 @@ export class StormGlass {
     )
     return this.normalizeResponse(response.data);
     } catch(err){
+      if (err.response && err.response.status) {
+        throw new StormGlassResponseError(
+          `Error: ${JSON.stringify(err.response.data)} Code: ${err.response.status}`
+        );
+      }
       throw new ClientRequestError(err.message)
     }
   }
