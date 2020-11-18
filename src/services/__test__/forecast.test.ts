@@ -1,3 +1,4 @@
+import { ForecastProcessingInternalError } from './../forecast';
 import { StormGlass } from '@src/clients/stormGlass';
 import stormGlassNormalizedResponseFixture from '@__test__/fixtures/stormglass_normalized_response_3_hours.json';
 import { Beach, BeachPosition, Forecast } from '../forecast';
@@ -105,6 +106,6 @@ describe('Forecast Service', () => {
     ];
     mockedStormGlassService.fetchPoints.mockRejectedValue( 'Error fetching data' );
     const forecast = new Forecast(mockedStormGlassService);
-    await expect(forecast.processForecastForBeaches(beaches)).rejects.toThrowError(Error);
+    await expect(forecast.processForecastForBeaches(beaches)).rejects.toThrowError(ForecastProcessingInternalError);
   });
 });
