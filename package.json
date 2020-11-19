@@ -9,7 +9,7 @@
     "start:dev": "ts-node-dev 'src/index.ts'",
     "lint": "eslint ./src ./__test__ --ext .ts",
     "lint:fix": "eslint ./src ./__test__ --ext .ts --fix",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "yarn test:unit && yarn test:functional",
     "test:functional": "jest --projects ./__test__ --runInBand",
     "test:unit": "jest",
     "style:check": "prettier --check 'src/**/*.ts' '__test__/**/*.ts'",
