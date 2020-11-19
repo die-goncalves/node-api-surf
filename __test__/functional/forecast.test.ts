@@ -1,4 +1,5 @@
 import { Beach, BeachPosition } from "@src/models/beach";
+import nock from 'nock';
 
 describe('Beach forecast functional tests', () => {
   beforeEach(async () => {
@@ -14,6 +15,7 @@ describe('Beach forecast functional tests', () => {
   });
   
   it('should return a forecast with just a few times', async () => {
+    nock.recorder.rec();
     const { body, status } = await global.testRequest.get('/forecast');
     expect(status).toBe(200);
     expect(body).toEqual([
