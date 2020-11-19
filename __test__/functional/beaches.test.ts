@@ -36,7 +36,7 @@ describe('Beaches functional tests', () => {
       jest.spyOn(Beach.prototype, 'save').mockImplementationOnce(async () => {
         return await new Promise((resolve, reject) => reject(new Error()))
       })
-      console.log(Error);
+      
       const newBeach = {
         lat: -33.792726,
         lng: 151.289824,
