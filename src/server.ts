@@ -7,8 +7,11 @@ import { Application } from 'express';
 import * as database from '@src/database'
 import { UsersController } from './controllers/users';
 import logger from './logger';
+import * as http from 'http';
 
 export class SetupServer extends Server {
+  private server?: http.Server;
+
   constructor(private port = 3000) {
     super();
   }
@@ -20,9 +23,11 @@ export class SetupServer extends Server {
     this.setupControllers();
     await this.databaseSetup();
   }
+
   private setupExpress(): void {
     this.app.use(bodyParser.json());
   }
+
   private setupControllers(): void {
     const forecastController = new ForecastController();
     const beachesController = new BeachesController();
@@ -30,11 +35,23 @@ export class SetupServer extends Server {
     //Passar para o overnight que faz o setup no express
     this.addControllers([forecastController, beachesController, usersController]);
   }
+
   private async databaseSetup(): Promise<void> {
     await database.connect();
   }
+
   public async close(): Promise<void> {
     await database.close();
+    if (this.server) {
+      await new Promise((resolve, reject) => {
+        this.server?.close((err) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve();
+        });
+      });
+    }
   }
 
   public getApp(): Application {
