@@ -33,5 +33,13 @@ describe('Rating Service', () => {
       );
       expect(rating).toBe(3);
     });
+
+    it('should get rating 5 for a beach with offshore winds', () => {
+      const rating = defaultRating.getRatingBasedOnWindAndWavePositions(
+        BeachPosition.E,
+        BeachPosition.W
+      );
+      expect(rating).toBe(5);
+    });
   });
 });
