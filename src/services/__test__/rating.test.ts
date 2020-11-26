@@ -1,4 +1,5 @@
 import { Beach, BeachPosition } from '@src/models/beach';
+import { Rating } from '../rating';
 
 describe('Rating Service', () => {
   const defaultBeach: Beach = {
