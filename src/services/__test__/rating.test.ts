@@ -63,6 +63,19 @@ describe('Rating Service', () => {
       expect(rating).toBe(4);
     });
 
+    it('should get a rating of 4 for a point with offshore winds, shoulder high swell and good interval', () => {
+      const point = {
+        ...defaultPoint,
+        ...{
+          swellHeight: 1.5,
+          swellPeriod: 12,
+          windDirection: 250,
+        },
+      };
+      const rating = defaultRating.getRateForPoint(point);
+      expect(rating).toBe(4);
+    });
+
   });
 
   /**
