@@ -27,6 +27,17 @@ describe('Rating Service', () => {
       expect(rating).toBe(1);
     });
 
+    it('should get a rating of 1 for an ok point', () => {
+      const pointData = {
+        swellHeight: 0.4,
+      };
+      // using spread operator for cloning objects instead of Object.assign
+      const point = { ...defaultPoint, ...pointData };
+
+      const rating = defaultRating.getRateForPoint(point);
+      expect(rating).toBe(1);
+    });
+
   });
 
   /**
