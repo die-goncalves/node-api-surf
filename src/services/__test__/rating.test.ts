@@ -89,6 +89,19 @@ describe('Rating Service', () => {
       expect(rating).toBe(5);
     });
 
+    it('should get a rating of 4 a good condition but with crossshore winds', () => {
+      const point = {
+        ...defaultPoint,
+        ...{
+          swellHeight: 2.5,
+          swellPeriod: 16,
+          windDirection: 130,
+        },
+      };
+      const rating = defaultRating.getRateForPoint(point);
+      expect(rating).toBe(4);
+    });
+
   });
 
   /**
