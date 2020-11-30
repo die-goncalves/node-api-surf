@@ -9,7 +9,7 @@
     "start:local": "ts-node-dev 'src/index.ts' | pino-pretty -c",
     "lint": "eslint ./src ./__test__ --ext .ts",
     "lint:fix": "eslint ./src ./__test__ --ext .ts --fix",
-    "test": "yarn test:unit && yarn test:functional",
+    "test": "yarn lint && yarn style:check && yarn test:unit && yarn test:functional",
     "test:functional": "jest --projects ./__test__ --runInBand",
     "test:unit": "jest",
     "style:check": "prettier --check 'src/**/*.ts' '__test__/**/*.ts'",
