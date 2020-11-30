@@ -10,6 +10,10 @@ import logger from './logger';
 import * as http from 'http';
 import expressPino from 'express-pino-logger';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import apiSchema from './api-schema.json';
+const OpenApiValidator = require('express-openapi-validator'); // Import the express-openapi-validator library
+import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 
 export class SetupServer extends Server {
   private server?: http.Server;
@@ -22,6 +26,7 @@ export class SetupServer extends Server {
   //1° controi o SetupServer e depois chama o init. Não chama no construtor pois teremos operações assincronas.
   public async init(): Promise<void> {
     this.setupExpress();
+    await this.docsSetup();
     this.setupControllers();
     await this.databaseSetup();
   }
@@ -44,6 +49,16 @@ export class SetupServer extends Server {
     const usersController = new UsersController();
     //Passar para o overnight que faz o setup no express
     this.addControllers([forecastController, beachesController, usersController]);
+  }
+
+  // Install the OpenApiValidator onto your express app
+  private async docsSetup(): Promise<void> {
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSchema));
+    this.app.use(OpenApiValidator.middleware({
+      apiSpec: apiSchema as OpenAPIV3.Document,
+      validateRequests: true, //we do it
+      validateResponses: true,
+    }))
   }
 
   private async databaseSetup(): Promise<void> {
