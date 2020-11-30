@@ -14,6 +14,7 @@ import swaggerUi from 'swagger-ui-express';
 import apiSchema from './api-schema.json';
 const OpenApiValidator = require('express-openapi-validator'); // Import the express-openapi-validator library
 import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
+import { apiErrorValidator } from './middlewares/api-error-validator';
 
 export class SetupServer extends Server {
   private server?: http.Server;
@@ -29,6 +30,8 @@ export class SetupServer extends Server {
     await this.docsSetup();
     this.setupControllers();
     await this.databaseSetup();
+    //must be the last
+    this.setupErrorHandlers();
   }
 
   private setupExpress(): void {
@@ -49,6 +52,10 @@ export class SetupServer extends Server {
     const usersController = new UsersController();
     //Passar para o overnight que faz o setup no express
     this.addControllers([forecastController, beachesController, usersController]);
+  }
+
+  private setupErrorHandlers(): void {
+    this.app.use(apiErrorValidator);
   }
 
   // Install the OpenApiValidator onto your express app
