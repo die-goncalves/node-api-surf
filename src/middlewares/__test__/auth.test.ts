@@ -1,5 +1,5 @@
-import AuthService from "@src/services/auth";
-import { authMiddleware } from "../auth";
+import AuthService from '@src/services/auth';
+import { authMiddleware } from '../auth';
 
 describe('AuthMiddleware', () => {
   it('should verify a JWT token and call the next middleware', () => {
@@ -28,7 +28,7 @@ describe('AuthMiddleware', () => {
       })),
     };
     const nextFake = jest.fn();
-    authMiddleware(reqFake, resFake as object, nextFake);
+    authMiddleware(reqFake, resFake as Record<string, unknown>, nextFake);
     expect(resFake.status).toHaveBeenCalledWith(401);
     expect(sendMock).toHaveBeenCalledWith({
       code: 401,
@@ -47,7 +47,7 @@ describe('AuthMiddleware', () => {
       })),
     };
     const nextFake = jest.fn();
-    authMiddleware(reqFake, resFake as object, nextFake);
+    authMiddleware(reqFake, resFake as Record<string, unknown>, nextFake);
     expect(resFake.status).toHaveBeenCalledWith(401);
     expect(sendMock).toHaveBeenCalledWith({
       code: 401,

@@ -101,7 +101,6 @@ describe('Rating Service', () => {
       const rating = defaultRating.getRateForPoint(point);
       expect(rating).toBe(4);
     });
-
   });
 
   /**
@@ -180,8 +179,8 @@ describe('Rating Service', () => {
   });
 
   /**
-  * Location specific calculation
-  */
+   * Location specific calculation
+   */
   describe('Get position based on points location', () => {
     it('should get the point based on a east location', () => {
       const response = defaultRating.getPositionFromLocation(92);

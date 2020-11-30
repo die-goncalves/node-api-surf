@@ -1,6 +1,6 @@
-import { Beach } from "@src/models/beach";
-import { User } from "@src/models/user";
-import AuthService from "@src/services/auth";
+import { Beach } from '@src/models/beach';
+import { User } from '@src/models/user';
+import AuthService from '@src/services/auth';
 
 describe('Beaches functional tests', () => {
   const defaultUser = {
@@ -26,7 +26,10 @@ describe('Beaches functional tests', () => {
         position: 'E',
       };
 
-      const response = await global.testRequest.post('/beaches').set({ 'x-access-token': token }).send(newBeach);
+      const response = await global.testRequest
+        .post('/beaches')
+        .set({ 'x-access-token': token })
+        .send(newBeach);
       expect(response.status).toBe(201);
       expect(response.body).toEqual(expect.objectContaining(newBeach));
     });
@@ -38,21 +41,23 @@ describe('Beaches functional tests', () => {
         name: 'Manly',
         position: 'E',
       };
-      const response = await global.testRequest.post('/beaches').set({ 'x-access-token': token }).send(newBeach);
+      const response = await global.testRequest
+        .post('/beaches')
+        .set({ 'x-access-token': token })
+        .send(newBeach);
 
       expect(response.status).toBe(400);
       expect(response.body).toEqual({
         code: 400,
         error: 'Bad Request',
-        message:
-          'request.body.lat should be number',
+        message: 'request.body.lat should be number',
       });
     });
 
     it('should return 500 when there is any error other than validation error', async () => {
       jest.spyOn(Beach.prototype, 'save').mockImplementationOnce(async () => {
-        return await new Promise((resolve, reject) => reject(new Error()))
-      })
+        return await new Promise((resolve, reject) => reject(new Error()));
+      });
 
       const newBeach = {
         lat: -33.792726,
@@ -60,14 +65,16 @@ describe('Beaches functional tests', () => {
         name: 'Manly',
         position: 'E',
       };
-      const response = await global.testRequest.post('/beaches').set({ 'x-access-token': token }).send(newBeach);
-      expect(response.status).toBe(500)
+      const response = await global.testRequest
+        .post('/beaches')
+        .set({ 'x-access-token': token })
+        .send(newBeach);
+      expect(response.status).toBe(500);
       expect(response.body).toEqual({
         code: 500,
         error: 'Internal Server Error',
-        message:
-          'Something went wrong!'
-      })
+        message: 'Something went wrong!',
+      });
     });
   });
 });

@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import { ForecastController } from './controllers/forecast';
 import { BeachesController } from './controllers/beaches';
 import { Application } from 'express';
-import * as database from '@src/database'
+import * as database from '@src/database';
 import { UsersController } from './controllers/users';
 import logger from './logger';
 import * as http from 'http';
@@ -12,6 +12,7 @@ import expressPino from 'express-pino-logger';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import apiSchema from './api-schema.json';
+/* eslint-disable @typescript-eslint/no-var-requires */
 const OpenApiValidator = require('express-openapi-validator'); // Import the express-openapi-validator library
 import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import { apiErrorValidator } from './middlewares/api-error-validator';
@@ -36,13 +37,15 @@ export class SetupServer extends Server {
 
   private setupExpress(): void {
     this.app.use(bodyParser.json());
-    this.app.use(expressPino({
-      logger,
-    })
+    this.app.use(
+      expressPino({
+        logger,
+      })
     );
-    this.app.use(cors({
-      origin: '*',
-    })
+    this.app.use(
+      cors({
+        origin: '*',
+      })
     );
   }
 
@@ -51,7 +54,11 @@ export class SetupServer extends Server {
     const beachesController = new BeachesController();
     const usersController = new UsersController();
     //Passar para o overnight que faz o setup no express
-    this.addControllers([forecastController, beachesController, usersController]);
+    this.addControllers([
+      forecastController,
+      beachesController,
+      usersController,
+    ]);
   }
 
   private setupErrorHandlers(): void {
@@ -61,11 +68,13 @@ export class SetupServer extends Server {
   // Install the OpenApiValidator onto your express app
   private async docsSetup(): Promise<void> {
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSchema));
-    this.app.use(OpenApiValidator.middleware({
-      apiSpec: apiSchema as OpenAPIV3.Document,
-      validateRequests: true, //we do it
-      validateResponses: true,
-    }))
+    this.app.use(
+      OpenApiValidator.middleware({
+        apiSpec: apiSchema as OpenAPIV3.Document,
+        validateRequests: true, //we do it
+        validateResponses: true,
+      })
+    );
   }
 
   private async databaseSetup(): Promise<void> {

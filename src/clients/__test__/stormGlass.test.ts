@@ -6,18 +6,22 @@ import StormGlassNormalized3HoursFixture from '@__test__/fixtures/stormglass_nor
 jest.mock('@src/util/request');
 
 describe('StormGlass client', () => {
-  const MockedRequestClass = HTTPUtil.Request as jest.Mocked<typeof HTTPUtil.Request>
-  const mockedRequest = new HTTPUtil.Request() as jest.Mocked<HTTPUtil.Request>
+  const MockedRequestClass = HTTPUtil.Request as jest.Mocked<
+    typeof HTTPUtil.Request
+  >;
+  const mockedRequest = new HTTPUtil.Request() as jest.Mocked<HTTPUtil.Request>;
 
   it('Should return the normalized forecast from the StormGlass service', async () => {
     const lat = 19.385;
     const lng = -139.4;
 
-    mockedRequest.get.mockResolvedValue({data: StormGlassWeather3HoursFixture} as HTTPUtil.Response)
+    mockedRequest.get.mockResolvedValue({
+      data: StormGlassWeather3HoursFixture,
+    } as HTTPUtil.Response);
 
     const stormGlass = new StormGlass(mockedRequest);
     const response = await stormGlass.fetchPoints(lat, lng);
-    expect(response).toEqual(StormGlassNormalized3HoursFixture)
+    expect(response).toEqual(StormGlassNormalized3HoursFixture);
   });
 
   it('should exclude incomplete data points', async () => {
@@ -33,7 +37,9 @@ describe('StormGlass client', () => {
         },
       ],
     };
-    mockedRequest.get.mockResolvedValue({ data: incompleteResponse } as HTTPUtil.Response);
+    mockedRequest.get.mockResolvedValue({
+      data: incompleteResponse,
+    } as HTTPUtil.Response);
 
     const stormGlass = new StormGlass(mockedRequest);
     const response = await stormGlass.fetchPoints(lat, lng);
@@ -58,7 +64,7 @@ describe('StormGlass client', () => {
     const lat = -33.792726;
     const lng = 151.289824;
 
-    MockedRequestClass.isRequestError.mockReturnValue(true)
+    MockedRequestClass.isRequestError.mockReturnValue(true);
     mockedRequest.get.mockRejectedValue({
       response: {
         status: 429,

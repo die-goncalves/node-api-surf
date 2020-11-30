@@ -3,11 +3,11 @@ import { SetupServer } from '@src/server';
 import supertest from 'supertest';
 
 let server: SetupServer;
-beforeAll(async() => {
+beforeAll(async () => {
   //roda antes de todos os testes da aplicação
   server = new SetupServer();
   await server.init();
   global.testRequest = supertest(server.getApp());
 });
 
-afterAll(async() => await server.close());
+afterAll(async () => await server.close());

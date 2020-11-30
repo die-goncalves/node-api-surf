@@ -13,7 +13,7 @@ export enum CUSTOM_VALIDATION {
   DUPLICATED = 'DUPLICATED',
 }
 
-interface UserModel extends Omit<User, '_id'>, Document { }
+interface UserModel extends Omit<User, '_id'>, Document {}
 
 const schema = new mongoose.Schema(
   {
@@ -36,10 +36,11 @@ const schema = new mongoose.Schema(
   }
 );
 
-schema.path('email').validate(async (email: string) => {
-  const emailCount = await mongoose.models.User.countDocuments({ email });
-  return !emailCount;
-},
+schema.path('email').validate(
+  async (email: string) => {
+    const emailCount = await mongoose.models.User.countDocuments({ email });
+    return !emailCount;
+  },
   'already exists in the database.',
   CUSTOM_VALIDATION.DUPLICATED
 );

@@ -19,7 +19,10 @@ export class UsersController extends BaseController {
   }
 
   @Post('authenticate')
-  public async authenticate(req: Request, res: Response): Promise<Response | undefined> {
+  public async authenticate(
+    req: Request,
+    res: Response
+  ): Promise<Response | undefined> {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
       return this.sendErrorResponse(res, {
@@ -27,7 +30,9 @@ export class UsersController extends BaseController {
         message: 'User not found!',
       });
     }
-    if (!(await AuthService.comparePasswords(req.body.password, user.password))) {
+    if (
+      !(await AuthService.comparePasswords(req.body.password, user.password))
+    ) {
       return this.sendErrorResponse(res, {
         code: 401,
         message: 'Password does not match!',

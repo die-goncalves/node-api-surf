@@ -1,5 +1,5 @@
-import { User } from "@src/models/user";
-import AuthService from "@src/services/auth";
+import { User } from '@src/models/user';
+import AuthService from '@src/services/auth';
 
 describe('Users functional tests', () => {
   beforeEach(async () => {
@@ -14,11 +14,15 @@ describe('Users functional tests', () => {
       };
       const response = await global.testRequest.post('/users').send(newUser);
       expect(response.status).toBe(201);
-      await expect(AuthService.comparePasswords(newUser.password, response.body.password)).resolves.toBeTruthy();
-      expect(response.body).toEqual(expect.objectContaining({
-        ...newUser,
-        ... { password: expect.any(String) }
-      }));
+      await expect(
+        AuthService.comparePasswords(newUser.password, response.body.password)
+      ).resolves.toBeTruthy();
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          ...newUser,
+          ...{ password: expect.any(String) },
+        })
+      );
     });
 
     it('should return a validation error when a field is missing', async () => {
@@ -49,7 +53,8 @@ describe('Users functional tests', () => {
       expect(response.body).toEqual({
         code: 409,
         error: 'Conflict',
-        message: 'User validation failed: email: already exists in the database.',
+        message:
+          'User validation failed: email: already exists in the database.',
       });
     });
   });
@@ -66,7 +71,8 @@ describe('Users functional tests', () => {
         .post('/users/authenticate')
         .send({ email: newUser.email, password: newUser.password });
 
-      expect(response.body).toEqual(expect.objectContaining({ token: expect.any(String) })
+      expect(response.body).toEqual(
+        expect.objectContaining({ token: expect.any(String) })
       );
     });
 

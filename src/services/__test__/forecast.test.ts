@@ -187,8 +187,12 @@ describe('Forecast Service', () => {
         user: 'fake-id',
       },
     ];
-    mockedStormGlassService.fetchPoints.mockRejectedValue('Error fetching data');
+    mockedStormGlassService.fetchPoints.mockRejectedValue(
+      'Error fetching data'
+    );
     const forecast = new Forecast(mockedStormGlassService);
-    await expect(forecast.processForecastForBeaches(beaches)).rejects.toThrowError(ForecastProcessingInternalError);
+    await expect(
+      forecast.processForecastForBeaches(beaches)
+    ).rejects.toThrowError(ForecastProcessingInternalError);
   });
 });
