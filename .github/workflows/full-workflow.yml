@@ -43,6 +43,11 @@ jobs:
       run: ./scripts/deploy.sh
 
     - name: Deployment
-      run: git remote add umbler ssh://git@kamino.deploy.umbler.com:9922/jr1o5m2k/teste-forecast-com.git && git checkout -b master && git push umbler master
-      env:
-        CI: true
+      - if: github.ref == 'refs/heads/master'
+        run: git remote add umbler ssh://git@geonosis.deploy.umbler.com:9922/jy4xooxj/waldemarnt2-com.git && git push umbler master
+        env:
+          CI: true
+      - if: github.ref != 'refs/heads/master'
+        run: git remote add umbler ssh://git@kamino.deploy.umbler.com:9922/jr1o5m2k/teste-forecast-com.git && git checkout -b master && git push umbler master
+        env:
+          CI: true
